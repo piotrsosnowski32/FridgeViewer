@@ -1,20 +1,23 @@
-import styled from 'styled-components';
-import Field from './field';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
 
-const ItemDiv = styled.div`
-    height: 100px;
-    width: 50%;
-    border: solid; 
-    border-radius: 30px;
-`
+interface ItemProps {
+    id: number;
+    data: {
+        name : string;
+        buy_date : string;
+        toeat_date : string | null;
+        category : string;
+    }
+};
 
-export const Item = ({ id, data }:any) => {
-    console.log(data)
+export const Item = ( { id, data } : ItemProps ) => {
+    console.log()
     return (
-        <ItemDiv>
-            <Field data={data}></Field>
-        </ItemDiv>
+        <ListItem style={ { width: '90%' } }>
+            <ListItemButton sx={ { backgroundColor: '#FCB53B' } }>NAZWA: {data.name}  WAŻNE DO: {data.toeat_date} ZAKUPIONO: {data.buy_date}</ListItemButton>
+        </ListItem>
     );
 };
 
-//
+// data={data}
