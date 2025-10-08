@@ -1,5 +1,4 @@
-import React from 'react';
-import MainFrame from './components/ui/mainFrame';
+import MainFrame from './components/ui/mainFrame.tsx';
 
 function App() {
   return (

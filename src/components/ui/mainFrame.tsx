@@ -1,4 +1,4 @@
-import { Item } from "../layout/Item";
+import { Item } from "../layout/Item.tsx";
 import List from '@mui/material/List';
 import Container from '@mui/material/Container';
 
