@@ -1,14 +1,19 @@
 import { Item } from "../layout/Item.tsx";
 import List from '@mui/material/List';
 import Container from '@mui/material/Container';
+import product from '../../services/product.tsx';
 
 
-export default function MainFrame() {
+export default async function MainFrame() {
     const items = [
         {'id':0, 'name': 'marchewka','buy_date':null, 'toeat_date': '2025-09-27', 'category': 'warzywa'},
         {'id':1, 'name': 'kurczak','buy_date':'2025-09-26', 'toeat_date': '2025-10-09', 'category': 'mieso'},
         {'id':2, 'name': 'skyr','buy_date':'2025-09-24', 'toeat_date': '2025-10-10', 'category': 'nabial'}
     ];
+
+    
+    const items_test = await product.getProducts(); // NIE DZIAŁAAAAAA
+    console.log(items_test)
     
     return (
         <Container style={ { display:"flex", flexDirection:'column', backgroundColor: '#e9ddb6ff', width: '100%', margin:0, maxWidth:'3000px', minHeight:'3000px', padding:0 } }>
