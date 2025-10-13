@@ -2,19 +2,18 @@ import { Item } from "../layout/Item.tsx";
 import List from '@mui/material/List';
 import Container from '@mui/material/Container';
 import product from '../../services/product.tsx';
+import { useEffect, useState } from "react";
+import ItemProps from "../layout/Item.tsx";
 
 
-export default async function MainFrame() {
-    const items = [
-        {'id':0, 'name': 'marchewka','buy_date':null, 'toeat_date': '2025-09-27', 'category': 'warzywa'},
-        {'id':1, 'name': 'kurczak','buy_date':'2025-09-26', 'toeat_date': '2025-10-09', 'category': 'mieso'},
-        {'id':2, 'name': 'skyr','buy_date':'2025-09-24', 'toeat_date': '2025-10-10', 'category': 'nabial'}
-    ];
+export default function MainFrame() {
+    const [items, setItems] = useState<ItemProps[]>([]);
 
-    
-    const items_test = await product.getProducts(); // NIE DZIAŁAAAAAA
-    console.log(items_test)
-    
+    useEffect(() => {
+        product.getProducts()
+            .then(data => setItems(data));
+    }, []);
+
     return (
         <Container style={ { display:"flex", flexDirection:'column', backgroundColor: '#e9ddb6ff', width: '100%', margin:0, maxWidth:'3000px', minHeight:'3000px', padding:0 } }>
 
@@ -22,9 +21,16 @@ export default async function MainFrame() {
 
             <Container sx={ { height:"90%", padding:0, width: '50%' } }>
                 <List style={ { height:"100%", display: "flex", flexDirection: "column", alignItems: 'center', padding:0 } }>
-                    {items.map(( { id, name, buy_date, toeat_date, category } ) => (
-                        <Item key={id} id={id} data={ { name, buy_date, toeat_date, category } }/>
-                    ))}
+                    {!items || items?.length===0 ? <div>Loading...</div> :
+                        items.map(( { id, name, purchase_date, expiry_date, category } ) => ( 
+                            <Item 
+                                key={id} 
+                                id={id} 
+                                name={ name } 
+                                purchase_date={purchase_date} 
+                                expiry_date={expiry_date} 
+                                category={category} /> ))
+                    }
                 </List>
             </Container>
 
@@ -34,7 +40,4 @@ export default async function MainFrame() {
     )
 
 };
-/*
 
-
-*/

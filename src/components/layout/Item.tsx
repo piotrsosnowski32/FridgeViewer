@@ -6,21 +6,21 @@ import { useEffect } from 'react';
 
 interface ItemProps {
     id: number;
-    data: {
-        name : string;
-        buy_date : string | null;
-        toeat_date : string;
-        category : string;
-    }
+    name : string;
+    purchase_date : string | null;
+    expiry_date : string;
+    category : string;
+
 };
 
+export default ItemProps;
 
-export const Item = ( { id, data } : ItemProps ) => {
+export const Item = ( { id, name, purchase_date, expiry_date, category } : ItemProps ) => {
     const [innerStyle, setInnerStyle] = useState('#b0eeadff');
     const [borderStyle, setborderStyle] = useState('solid #1dee12ff');
 
     const today = new Date().valueOf(); 
-    const toEatDate = new Date(data.toeat_date).valueOf();
+    const toEatDate = new Date(expiry_date).valueOf();
     const difference = Math.ceil((toEatDate - today) / (1000 * 3600 * 24));
 
     useEffect(() => {
@@ -37,11 +37,11 @@ export const Item = ( { id, data } : ItemProps ) => {
         <ListItem style={ { width: '90%', borderRadius: '10px' } }>
             <ListItemButton sx={ { backgroundColor: innerStyle, border: borderStyle , borderRadius: '10px', display:'flex', justifyContent:'space-between' } }>
                 <div style = { { display: 'flex', flexDirection: 'column' } }>
-                    <span>{data.name}</span>
-                    <span>zakupiono: {data.buy_date}</span>
+                    <span>{name}</span>
+                    <span>zakupiono: {purchase_date}</span>
                 </div>
                 <div style = { { display: 'flex', flexDirection: 'column' } }> 
-                    {data.toeat_date}
+                    {expiry_date}
                     <span>Do końca: {difference}</span>
                 </div>              
              </ListItemButton>
@@ -50,4 +50,5 @@ export const Item = ( { id, data } : ItemProps ) => {
 };
 
 
+//
 // data={data} ZAKUPIONO: {data.buy_date} <p style={ { margin:'0' } }>{CalculateDays(data.toeat_date)}{CalculateDays(data.toeat_date)}</p>
