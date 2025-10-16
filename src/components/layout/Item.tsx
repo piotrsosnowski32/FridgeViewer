@@ -1,8 +1,9 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import { format } from 'date-fns';
+import BasicMenu from './menu.tsx';
 import { useState } from 'react';
 import { useEffect } from 'react';
+
 
 interface ItemProps {
     id: number;
@@ -10,7 +11,6 @@ interface ItemProps {
     purchase_date : string | null;
     expiry_date : string;
     category : string;
-
 };
 
 export default ItemProps;
@@ -39,12 +39,15 @@ export const Item = ( { id, name, purchase_date, expiry_date, category } : ItemP
                 <div style = { { display: 'flex', flexDirection: 'column' } }>
                     <span>{name}</span>
                     <span>zakupiono: {purchase_date}</span>
+                    <span>Termin ważności: {expiry_date}</span>
                 </div>
-                <div style = { { display: 'flex', flexDirection: 'column' } }> 
-                    {expiry_date}
-                    <span>Do końca: {difference}</span>
+                <div style = { { display: 'flex', flexDirection: 'column' } }>        
+                <span>Do końca: {difference}</span>
                 </div>              
-             </ListItemButton>
+            </ListItemButton>
+            <BasicMenu >
+
+            </BasicMenu>
         </ListItem>
     );
 };
