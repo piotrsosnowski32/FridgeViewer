@@ -3,19 +3,32 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import SvgIcon from '@mui/material/SvgIcon';
-import { useState } from 'react';
+import product from '../../services/product.tsx';
+import { useState, useEffect } from 'react';
 
-export default function BasicMenu() {
+export default function BasicMenu({ }) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [response, setResponse] = useState({});
 
 
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
+        setAnchorEl(event.currentTarget);
     };
 
     const handleClose = () => {
-    setAnchorEl(null);
+        setAnchorEl(null);
+    };
+
+    const handleEdit = () => {
+
+    };
+
+    const handleDelete = () => {
+        product.updateProducts()
+               .then((data) => console.log(data));
+
+        product.getProducts().then((data) => setResponse(data))       
     };
 
     return (
@@ -48,6 +61,7 @@ export default function BasicMenu() {
 
             <Menu
                 id="basic-menu"
+                data-id={id}
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleClose}
@@ -57,8 +71,8 @@ export default function BasicMenu() {
                     },
                 }}
             >
-                <MenuItem onClick={handleClose}>Edytuj</MenuItem>
-                <MenuItem onClick={handleClose}>Usuń</MenuItem>
+                <MenuItem data-id={id} onClick={handleEdit}>Edytuj</MenuItem>
+                <MenuItem data-id={id} onClick={handleDelete}>Usuń</MenuItem>
             </Menu>
         </div>
     );
