@@ -1,12 +1,7 @@
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import MenuItem from '@mui/material/MenuItem';
-import Paper from '@mui/material/Paper';
-import MenuList from '@mui/material/MenuList';
-import product from '../../services/product.tsx';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import * as React from 'react';
 
 
 interface ItemProps {
@@ -20,9 +15,6 @@ interface ItemProps {
 export default ItemProps;
 
 export const Item = ( { id, name, purchase_date, expiry_date, category } : ItemProps ) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const open = Boolean(anchorEl);
-
     const [innerStyle, setInnerStyle] = useState('#b0eeadff');
     const [borderStyle, setborderStyle] = useState('solid #1dee12ff');
 
@@ -30,20 +22,17 @@ export const Item = ( { id, name, purchase_date, expiry_date, category } : ItemP
     const toEatDate = new Date(expiry_date).valueOf();
     const difference = Math.ceil((toEatDate - today) / (1000 * 3600 * 24));
 
-    const handleUpdate = (id: number) => {
-        product.removeProducts(id)
-               .then((data) => console.log(data));
-
-        //product.getProducts().then((data) => setResponse(data))     
-    };
+    const [innerText, setInnerText] = useState(<span>Do końca: {difference} dni</span>);
 
     useEffect(() => {
         if (difference < 2 && difference > 0) {
                 setInnerStyle('#eec58fff');
                 setborderStyle('solid #ff950aff');
+                setInnerText(<span>Do końca: {difference} dzień</span>);
         } else if (difference < 0) {
                 setInnerStyle('#f7b8b8ff');
                 setborderStyle('solid #f70000ff');
+                setInnerText(<span>Produkt {Math.abs(difference)} { difference === -1 ? "dzień" : "dni" } po terminie!</span>);
         }
     }, [difference])
 
@@ -56,25 +45,9 @@ export const Item = ( { id, name, purchase_date, expiry_date, category } : ItemP
                     <span>Termin ważności: {expiry_date}</span>
                 </div>
                 <div style = { { display: 'flex', flexDirection: 'column' } }>        
-                <span>Do końca: {difference}</span>
+                    {innerText}
                 </div>              
             </ListItemButton>
-            
-        <Paper>
-            <MenuList>
-                <MenuItem  onClick={() => handleUpdate(id)}>Edytuj</MenuItem>
-                <MenuItem >Usuń</MenuItem>
-            </MenuList>
-        </Paper>    
-            
-
         </ListItem>
     );
 };
-
-//                <MenuItem >Edytuj</MenuItem>
-//                <MenuItem >Usuń</MenuItem>
-//
-// data={data} ZAKUPIONO: {data.buy_date} <p style={ { margin:'0' } }>{CalculateDays(data.toeat_date)}{CalculateDays(data.toeat_date)}</p>
-//            <BasicMenu>
-//            </BasicMenu>
