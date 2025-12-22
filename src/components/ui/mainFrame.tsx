@@ -16,10 +16,6 @@ export default function MainFrame() {
             .then(data => setItems(data));
     }, []);
 
-    const handleClick = () => {
-
-    };
-
     return (
         <Container style={ { display:"flex", flexDirection:'column', backgroundColor: '#e9ddb6ff', margin:0, padding:0, maxWidth: '100%', height: "100vh" } }>
             <header style={ { height:'5%', backgroundColor:"#272727", color:'white' } }>FRIDGE VIEWER</header>
